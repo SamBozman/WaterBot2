@@ -5,14 +5,14 @@
 
 // #include <AccelStepper.h>
 // #include <ArduinoJson.h>
-// #include <LittleFS.h>
+#include <LittleFS.h>
 // #include <algorithm>
 // #include <iostream> // for testing output in main
 // #include <set>
 // #include <string>
 
 // #include "BluetoothSerial.h" // Bluetooth Serial -> works ONLY on ESP32
-// #include "FS.h"
+#include "FS.h"
 
 #define Debug 1 // set to 0 if Serial prints not needed
 
@@ -49,7 +49,7 @@
 // long S_MaxPos = 10000; // Spray Stepper Maximum travel position from home
 // long* MaxPtr = &H_MaxPos; // init MaxPtr
 
-// #define FORMAT_LITTLEFS_IF_FAILED true
+#define FORMAT_LITTLEFS_IF_FAILED true
 // char g_output[255]; // Serialized water target object
 // String textIncoming = "";
 // char path[25]; // path to saved files

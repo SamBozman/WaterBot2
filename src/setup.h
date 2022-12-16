@@ -3,7 +3,7 @@
 void setup()
 {
     Serial.begin(115200);
-    // mountLFS(); //* Return message to app if failed?
+    mountLFS(); //* Return message to app if failed?
     // ESP_BT.begin("ESP32_Control"); // Name of your Bluetooth interface
     delay(5000); //! Temporary for testing
     // creat directorys for max positions and Target data
