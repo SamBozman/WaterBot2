@@ -1,7 +1,10 @@
-
+#include "data_manager.h"
+#include "files.h"
+#include "globals.h"
 
 void setup()
 {
+
     Serial.begin(115200);
     mountLFS(); //* Return message to app if failed?
     // ESP_BT.begin("ESP32_Control"); // Name of your Bluetooth interface
@@ -60,4 +63,26 @@ void setup()
     // debugln(numFiles);
     // Shutoff water
     // TODO start a timer to shut down steppers after a specific time period.
+
+    // Sample use of data manager
+    WATER_DATA_MANAGER data_manager; // Create a Data Manager variable
+
+    // Add some data
+    WATER_DATA::target_data sample_data1 = { 0, 1, "foobar1", 1, 1, 1, 1, 1, 1, false };
+    WATER_DATA::target_data sample_data2 = { 12, 50, "foobar2", 1, 1, 1, 1, 1, 1, false };
+    WATER_DATA::target_data sample_data3 = { 5, 6, "foobar3", 1, 1, 1, 1, 1, 1, false };
+    WATER_DATA::target_data sample_data4 = { 1, 50, "foobar4", 1, 1, 1, 1, 1, 1, false };
+
+    // WATER_DATA::target_data sample_data5;
+    // sample_data5.id = 15;
+
+    data_manager.insert_data(sample_data1);
+    data_manager.insert_data(sample_data2);
+    data_manager.insert_data(sample_data3);
+    data_manager.insert_data(sample_data4);
+
+    // Print it out, delete one entry and print again
+    data_manager.print_all_data();
+    data_manager.delete_data(5);
+    data_manager.print_all_data();
 }

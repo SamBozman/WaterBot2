@@ -1,6 +1,4 @@
-#include "data_manager.h"
-#include "files.h"
-#include "globals.h"
+
 #include "setup.h"
 
 void loop()

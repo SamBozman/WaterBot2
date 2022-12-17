@@ -1,11 +1,8 @@
-#pragma once
-
-#include <algorithm>
-#include <iostream> // for testing output in main
-#include <set>
-#include <string> //////////////////////////////////////////////////////
+#ifndef DATA_MANAGER_H
+#define DATA_MANAGER_H
+#include "globals.h"
 // Class declarations (put this into data_manager.h)
-////////////////////////////////////////////////////////
+
 class WATER_DATA {
 
 public:
@@ -47,3 +44,4 @@ public:
 
 private:
 };
+#endif
