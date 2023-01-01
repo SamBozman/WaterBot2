@@ -1,4 +1,4 @@
-#include "data_manager.h"
+#include "globals.h"
 
 ////////////////////////////////////////////////////////
 // Class definition (put this code into data_manager.cpp)

@@ -2,6 +2,12 @@
 #include "setup.h"
 
 void loop()
+
 {
-    // put your main code here, to run repeatedly:
+    if (ESP_BT.available()) {
+        int incoming = ESP_BT.read(); // Read byte from cell-phone
+        processIncoming(incoming);
+    }
+
+    doStepLoop(StepPtr, MaxPtr);
 }
