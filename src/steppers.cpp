@@ -94,10 +94,16 @@ void processIncoming(int incoming)
         ESP_BT.write(206);
         debugln("Sending 206 back to app");
         break;
-    case 207: // Get Json from WaterBot app
+    case 207: // Get Json from WaterBot App
         getJson();
         ESP_BT.write(207);
         debugln("Sending 207 back to app");
+        break;
+    case 208: // Send new Target ID number to WaterBot App
+        getJson();
+        ESP_BT.write(208);
+        debugln("Sending 208 back to app");
+        targetIndex();//process new/existing targetIndex
         break;
 
     case 254: //! Testing blob text to WaterBot app

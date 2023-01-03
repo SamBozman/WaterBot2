@@ -29,7 +29,28 @@ void WATER_DATA_MANAGER::print_all_data()
 {
     std::cout << "WATER_DATA:\n";
     for (auto data : water_data_set) {
-        std::cout << "\tID: " << data.id << " HP: " << data.hp << " name: " << data.name << "\n";
+
+        debug("ID: ");
+        debug(data.id);
+        debug(", HP: ");
+        debug(data.hp);
+        debug(", Name: ");
+        debug(data.name);
+        debug(", VP: ");
+        debug(data.vp);
+        debug(", SP: ");
+        debug(data.sp);
+        debug(", HF: ");
+        debug(data.hf);
+        debug(", VF: ");
+        debug(data.vf);
+        debug(", SF: ");
+        debug(data.sf);
+        debug(", RWT: ");
+        debug(data.rwt);
+        debug(", WATER: ");
+        debug(data.water);
+        debugln("");
     }
-    std::cout << "\n";
+    debugln("");
 }

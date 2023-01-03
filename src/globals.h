@@ -6,7 +6,9 @@
 
 #include <AccelStepper.h>
 #include <ArduinoJson.h>
+#include <Array.h>
 #include <LittleFS.h>
+#include <Streaming.h>
 #include <algorithm>
 #include <iostream> // for testing output in main
 #include <set>
@@ -54,6 +56,14 @@ extern String textIncoming;
 extern char g_output[255]; // Serialized water target object
 extern char path[25]; // path to saved files
 
+#define arraySize 5 //! Set array size to 100 for production?
+typedef Array<int, arraySize> Elements; // defintion of array
+
+// All Function Declatations go here
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+void targetIndex();
+
 void stochar(int x); // Temporary
 void createTestFiles(int n); // Temporary
 void removeTestFiles(int n); // Temporary
@@ -88,14 +98,14 @@ void deleteFile(fs::FS& fs, const char* path);
 // void writeFile2(fs::FS& fs, const char* path, const char* message);
 // void deleteFile2(fs::FS& fs, const char* path);
 // void testFileIO(fs::FS& fs, const char* path);
-
+void testDataManager();
 class WATER_DATA {
 
 public:
     struct target_data {
         short int id; // Computer created Target ID
         short int hp; // Horizontal position
-        std::string name; // User defined name for the watering target
+        String name;
         short int vp; // Vertical Position
         short int sp; // Spray position – a needle to break up the spray stream
         short int hf; // Horizontal fluctuation -small variations in the horizontal position over time

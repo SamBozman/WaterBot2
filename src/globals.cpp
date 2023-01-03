@@ -12,5 +12,8 @@ long S_MaxPos = 10000; // Spray Stepper Maximum travel position from home
 long* MaxPtr = &H_MaxPos; // init MaxPtr
 
 String textIncoming = "";
+
 char g_output[255]; // Serialized water target object
 char path[25]; // path to saved files
+
+typedef Array<int,arraySize> Elements;
