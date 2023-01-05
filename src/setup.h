@@ -7,12 +7,19 @@ void setup()
     mountLFS(); //* Return message to app if failed?
     ESP_BT.begin("ESP32_Control"); // Name of your Bluetooth interface
     delay(5000); //! Temporary for testing
-    void configureMaximumPositions(); // Set up/load Maximum stepper postions
-    testDataManager();
 
-    // homeStepper(Hstepper, hHomePin);
-    // homeStepper(Vstepper, vHomePin);
-    // homeStepper(Sstepper, sHomePin);
+    homeStepper(Hstepper, hHomePin);
+    homeStepper(Vstepper, vHomePin);
+    homeStepper(Sstepper, sHomePin);
+
+    configureMaximumPositions(); // Set up/load Maximum stepper postions
+
+    int numFiles = 0;
+    numFiles = listFiles(LittleFS, "/TARGETS", 1, 0);
+    debug("NumFiles before creating targets is ");
+    debugln(numFiles);
+
+    // testDataManager();
 
     // int numFiles = 0;
     // numFiles = listFiles(LittleFS, "/TARGETS", 1, 0);
