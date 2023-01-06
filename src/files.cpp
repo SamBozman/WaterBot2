@@ -49,7 +49,7 @@ void loadTargets()
                 int n = s.length(); // Get length of combined string
                 strcpy(path, s.c_str()); // Convert it to a char array
 
-                WATER_DATA::target_data path = { id, hp, name, vp, sp, hf, vf, sf, rwt, water };
+                WATER_DATA::target_data path = { id, name, hp, hf, vp, vf, sp, sf, rwt, water };
                 data_manager.insert_data(path);
             }
         }
@@ -81,6 +81,8 @@ void saveTarget()
 
     debug("New ID for Target is ");
     debugln(numFiles);
+    debug("id for new Target is ");
+    debugln(id);
 
     StaticJsonDocument<255> doc; // deserialize data from WaterBot App
     DeserializationError err = deserializeJson(doc, textIncoming);

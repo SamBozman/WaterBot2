@@ -1,8 +1,5 @@
 #include "globals.h"
 
-////////////////////////////////////////////////////////
-// Class definition (put this code into data_manager.cpp)
-////////////////////////////////////////////////////////
 
 // Insert target_data into the set
 void WATER_DATA_MANAGER::insert_data(WATER_DATA::target_data& data)

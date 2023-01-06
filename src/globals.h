@@ -105,12 +105,12 @@ class WATER_DATA {
 public:
     struct target_data {
         short int id; // Computer created Target ID
-        int hp; // Horizontal position
         String name; // User created Water Target 'Name'
-        int vp; // Vertical Position
-        int sp; // Spray position – a needle to break up the spray stream
+        int hp; // Horizontal position
         short int hf; // Horizontal fluctuation -small variations in the horizontal position over time
+        int vp; // Vertical Position
         short int vf; // Vertical fluctuation -small variations in the vertical position over time
+        int sp; // Spray position – a needle to break up the spray stream
         short int sf; // Spray fluctuation -small variations in the spray needle position over time
         short int rwt; // Relative Watering Time (Certain plants will get more or less)
         bool water; // Do we want the water on or off while traversing to next target?

@@ -48,11 +48,11 @@ void testDataManager()
     WATER_DATA_MANAGER data_manager; // Create a Data Manager variable
 
     // Add some data
-    WATER_DATA::target_data sample_data1 = { 0, 1, "foobar1", 1, 1, 1, 1, 1, 1, false };
-    WATER_DATA::target_data sample_data2 = { 12, 50, "foobar2", 1, 1, 1, 1, 1, 1, false };
-    WATER_DATA::target_data sample_data3 = { 5, 6, "foobar3", 1, 1, 1, 1, 1, 1, false };
-    WATER_DATA::target_data sample_data4 = { 1, 50, "foobar4", 1, 1, 1, 1, 1, 1, false };
-    WATER_DATA::target_data sample_data6 = { id, hp, name, vp, sp, hf, vf, sf, rwt, water };
+    WATER_DATA::target_data sample_data1 = {1, "Test name 1", 100, 5, 350, 4, 125, 2, 5, false};
+    WATER_DATA::target_data sample_data2 = {1, "Test name 2", 320, 5, 350, 4, 125, 2, 5, false};
+    WATER_DATA::target_data sample_data3 = {1, "Test name 3", 200, 5, 350, 4, 125, 2, 5, false};
+    WATER_DATA::target_data sample_data4 = { 1, "Test name 4", 400, 5, 350, 4, 125, 2, 5, false};
+    WATER_DATA::target_data sample_data6 = { id, name, hp, hf, vp, vf, sp, sf, rwt, water };
     //  WATER_DATA::target_data sample_data5;
     //  sample_data5.id = 15;
 
