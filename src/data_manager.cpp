@@ -32,22 +32,28 @@ void WATER_DATA_MANAGER::print_all_data()
 
         debug("ID: ");
         debug(data.id);
-        debug(", HP: ");
-        debug(data.hp);
+
         debug(", Name: ");
         debug(data.name);
-        debug(", VP: ");
-        debug(data.vp);
-        debug(", SP: ");
-        debug(data.sp);
+
+        debug(", HP: ");
+        debug(data.hp);
         debug(", HF: ");
         debug(data.hf);
+
+        debug(", VP: ");
+        debug(data.vp);
         debug(", VF: ");
         debug(data.vf);
+
+        debug(", SP: ");
+        debug(data.sp);
         debug(", SF: ");
         debug(data.sf);
+
         debug(", RWT: ");
         debug(data.rwt);
+        
         debug(", WATER: ");
         debug(data.water);
         debugln("");

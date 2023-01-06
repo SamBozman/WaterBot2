@@ -1,10 +1,60 @@
 #include "globals.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void loadTargets(){
+void loadTargets()
+{
+    WATER_DATA_MANAGER data_manager; // Create a Data Manager variable
+    int numFiles = getNumTargetFiles();
+    if (numFiles == 0) {
+        debugln("No saved TargetFiles exist!");
+    } else {
+        for (int i = 1; i < numFiles + 1; i++) { // Run through this code for each target file
+            stochar(i);
+            File file = LittleFS.open(path);
+            if (!file || file.isDirectory()) {
+                debugln("- failed to open MAX directory for reading");
+                return;
+            }
 
+            debug("- reading from /TARGET direcory file: ");
+            debugln(path);
 
+            int x = 0;
+            while (file.available()) {
+                g_output[x] = file.read();
+                x++;
+            }
+            g_output[x] = 0; // delimiter
 
+            file.close();
+
+            StaticJsonDocument<255> doc;
+            DeserializationError err = deserializeJson(doc, g_output);
+            if (err) {
+                Serial.print(F("deserializeJson() of *MaxPtr failed with code "));
+                Serial.println(err.f_str());
+            } else {
+                short int id = doc["id"]; // Computer created Target ID
+                const char* name = doc["name"]; // Name of the Target Position
+                int hp = doc["hp"]; // Horizontal position
+                int vp = doc["vp"]; // Vertical Position
+                int sp = doc["sp"]; // Spray position – a needle to break up the spray stream
+                short int hf = doc["hf"]; // Horizontal fluctuation -small variations in the horizontal position over time
+                short int vf = doc["vf"]; // Vertical fluctuation -small variations in the vertical position over time
+                short int sf = doc["sf"]; // Spray fluctuation -small variations in the spray needle position over time
+                short int rwt = doc["rwt"]; // Relative Watering Time (Certain plants will get more or less)
+                bool water = doc[water]; // Do we want the water on or off while traversing to next target?
+
+                String s = "T" + String(i); // Combine 2 strings
+                int n = s.length(); // Get length of combined string
+                strcpy(path, s.c_str()); // Convert it to a char array
+
+                WATER_DATA::target_data path = { id, hp, name, vp, sp, hf, vf, sf, rwt, water };
+                data_manager.insert_data(path);
+            }
+        }
+        data_manager.print_all_data(); // Show all data_manager water Targets
+    }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -14,6 +64,7 @@ void saveTarget()
     textIncoming = ESP_BT.readStringUntil('\n');
     debug("Text incoming is ");
     debugln(textIncoming);
+
     short int id; // Computer created Target ID
     const char* name; // User defined Name of the Target Position
     int hp = Hstepper.currentPosition(); // Horizontal position
@@ -25,14 +76,13 @@ void saveTarget()
     short int rwt; // Relative Watering Time (Certain plants will get more or less)
     bool water; // Do we want the water on or off while traversing to next target?
 
-    int numFiles = 0;
-    numFiles = listFiles(LittleFS, "/TARGETS", 1, 0);
+    int numFiles = getNumTargetFiles();
     id = numFiles++; // add 1 to the count of existing waterTargets
 
     debug("New ID for Target is ");
     debugln(numFiles);
 
-    StaticJsonDocument<255> doc;
+    StaticJsonDocument<255> doc; // deserialize data from WaterBot App
     DeserializationError err = deserializeJson(doc, textIncoming);
     if (err) {
         Serial.print(F("deserializeJson() of *MaxPtr failed with code "));
@@ -46,33 +96,21 @@ void saveTarget()
         rwt = doc["RWT"];
         water = doc["Water"];
     }
-    
-    makeWaterTarget(id, name, hp, vp, sp, hf, vf, sf, rwt, water);
-    stochar(numFiles); // add int x to 'TARGETS/T' to it to create a file name (T1, T2... etc)
-    writeFile(LittleFS, path, g_output);
 
-    // debug("ID = ");
-    // debug(id);
-    // debug(", Name= ");
-    // debug(name);
-    // debug(", H_Position = ");
-    // debug(hp);
-    // debug(", V_Position = ");
-    // debug(vp);
-    // debug(" , S_Position = ");
-    // debug(sp);
-    // debug(", H_Flux = ");
-    // debug(hf);
-    // debug(", V_Flux = ");
-    // debug(vf);
-    // debug(" , S_Flux = ");
-    // debug(sf);
-    // debug(", RWT = ");
-    // debug(rwt);
-    // debug(", Water = ");
-    // debugln(water);
+    makeWaterTarget(id, name, hp, vf, vp, vf, sp, sf, rwt, water);
+    stochar(numFiles); // add int numFiles to 'TARGETS/T'  to create a file name (T1, T2... etc)
+    writeFile(LittleFS, path, g_output);
 }
 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+int getNumTargetFiles()
+{
+    int numFiles = 0;
+    numFiles = listFiles(LittleFS, "/TARGETS", 1, 0);
+    debug("NumFiles in /TARGETS directory is ");
+    debugln(numFiles);
+    return numFiles;
+}
 // Check/Set/Read Maximum stepper positions+++++++++++++++++++++++++++++++++
 void configureMaximumPositions()
 {
@@ -188,18 +226,18 @@ void resetMax(AccelStepper* Stepper)
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void makeWaterTarget(int id, String name, long hs, int hf, long vs, int vf, long ss, int sf, int rwt, bool water)
+void makeWaterTarget(short int id, String name, int hp, short int hf, int vp, short int vf, int sp, short int sf, short int rwt, bool water)
 {
     const int capacity = 256; // Buffer for StaticJsonDocument doc
     StaticJsonDocument<capacity> doc; // Declare StaticJsonDocument doc
 
     doc["id"] = id; //(Int) ID  for watering target
     doc["name"] = name;
-    doc["hs"] = hs; // Horizontal steps from 'Home'
+    doc["hp"] = hp; // Horizontal steps from 'Home'
     doc["hf"] = hf; // Horizontal fluctuation for coverage
-    doc["vs"] = vs; // Vertical steps from 'Home'
+    doc["vp"] = vp; // Vertical steps from 'Home'
     doc["vf"] = vf; // Vertical fluctuation for coverage
-    doc["ss"] = ss; // Spray steps for diffused spray
+    doc["sp"] = sp; // Spray steps for diffused spray
     doc["sf"] = sf; // Spray fluctuation for diffused spray
     doc["rwt"] = rwt; // Relative watering time (1-5)
     doc["water"] = water; // Turn water off ? (or leave on while moving to next spot)

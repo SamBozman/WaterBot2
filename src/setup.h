@@ -8,16 +8,24 @@ void setup()
     ESP_BT.begin("ESP32_Control"); // Name of your Bluetooth interface
     delay(5000); //! Temporary for testing
 
-    homeStepper(Hstepper, hHomePin);
-    homeStepper(Vstepper, vHomePin);
-    homeStepper(Sstepper, sHomePin);
+    // homeStepper(Hstepper, hHomePin);
+    // homeStepper(Vstepper, vHomePin);
+    // homeStepper(Sstepper, sHomePin);
 
     configureMaximumPositions(); // Set up/load Maximum stepper postions
+    loadTargets();
+    //  testDataManager();
+    // int numFiles = 0;
+    // numFiles = listFiles(LittleFS, "/TARGETS", 1, 0);
+    // debug("NumFiles before creating targets is ");
+    // debugln(numFiles);
 
-
-
-    // testDataManager();
-
+    // stochar(1);
+    // deleteFile(LittleFS, path);
+    // stochar(2);
+    // deleteFile(LittleFS, path);
+    // stochar(3);
+    // deleteFile(LittleFS, path);
     // int numFiles = 0;
     // numFiles = listFiles(LittleFS, "/TARGETS", 1, 0);
     // debug("NumFiles before creating targets is ");

@@ -66,6 +66,8 @@ void stochar(int x); // Temporary
 void createTestFiles(int n); // Temporary
 void removeTestFiles(int n); // Temporary
 
+int getNumTargetFiles(); // Returns the number of exisiting waterTarget files
+
 void loadTargets();
 void saveTarget();
 void configureMaximumPositions();
@@ -79,7 +81,7 @@ void processStepper(AccelStepper* Stepper, int incoming);
 void doStepLoop(AccelStepper* Stepper, long* MaxPos);
 
 void mountLFS();
-void makeWaterTarget(int id, String name, long hs, int hf, long vs, int vf, long ss, int sf, int rwt, bool water);
+void makeWaterTarget(short int id, String name, int hs, short int hf, int vs, short int vf, int ss, short int sf, short int rwt, bool water);
 void listDir(fs::FS& fs, const char* dirname, uint8_t levels);
 bool isDir(fs::FS& fs, const char* dirname, uint8_t levels);
 
@@ -103,10 +105,10 @@ class WATER_DATA {
 public:
     struct target_data {
         short int id; // Computer created Target ID
-        short int hp; // Horizontal position
+        int hp; // Horizontal position
         String name; // User created Water Target 'Name'
-        short int vp; // Vertical Position
-        short int sp; // Spray position – a needle to break up the spray stream
+        int vp; // Vertical Position
+        int sp; // Spray position – a needle to break up the spray stream
         short int hf; // Horizontal fluctuation -small variations in the horizontal position over time
         short int vf; // Vertical fluctuation -small variations in the vertical position over time
         short int sf; // Spray fluctuation -small variations in the spray needle position over time
