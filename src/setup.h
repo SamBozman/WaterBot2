@@ -14,10 +14,7 @@ void setup()
 
     configureMaximumPositions(); // Set up/load Maximum stepper postions
 
-    int numFiles = 0;
-    numFiles = listFiles(LittleFS, "/TARGETS", 1, 0);
-    debug("NumFiles before creating targets is ");
-    debugln(numFiles);
+
 
     // testDataManager();
 

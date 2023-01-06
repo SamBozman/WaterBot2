@@ -64,6 +64,7 @@ void processIncoming(int incoming)
         MaxPtr = &H_MaxPos;
         ESP_BT.write(201); // Set app to use Hstepper
         debugln("Sending 201 back to app");
+        debugln("Set Hstepper to current Stepper Motor");
         ESP_BT.write(resetSlider);
         break;
     case 202:
@@ -71,6 +72,7 @@ void processIncoming(int incoming)
         MaxPtr = &V_MaxPos;
         ESP_BT.write(202); // Set app to use Vstepper
         debugln("Sending 202 back to app");
+        debugln("Set Vstepper to current Stepper Motor");
         ESP_BT.write(resetSlider);
         break;
     case 203:
@@ -78,6 +80,7 @@ void processIncoming(int incoming)
         MaxPtr = &S_MaxPos;
         ESP_BT.write(203); // Set app to use Sstepper
         debugln("Sending 203 back to app");
+        debugln("Set Spray to current Stepper Motor");
         ESP_BT.write(resetSlider);
         break;
     case 204: //! Will eventually be used to control water on/off
@@ -88,23 +91,24 @@ void processIncoming(int incoming)
         setMax(StepPtr);
         ESP_BT.write(205);
         debugln("Sending 205 back to app");
+        debugln("SetMax for current stepper motor");
         break;
     case 206: // RESET MAX to 10,000 for current stepper motor
         resetMax(StepPtr);
         ESP_BT.write(206);
         debugln("Sending 206 back to app");
+        debugln("RESET MAX to 10,000 for current stepper motor");
         break;
     case 207: // Get Json from WaterBot App
-        getJson();
+        saveTarget();
         ESP_BT.write(207);
         debugln("Sending 207 back to app");
-        void getJson();
+        debugln("Process Json from app and save new target");
         break;
     case 208: // Send new Target ID number to WaterBot App
-        getJson();
         ESP_BT.write(208);
         debugln("Sending 208 back to app");
-        targetIndex(); // process new/existing targetIndex
+        debugln("Adding a new Target");
         break;
 
     case 254: //! Testing blob text to WaterBot app

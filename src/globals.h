@@ -62,13 +62,12 @@ typedef Array<int, arraySize> Elements; // defintion of array
 // All Function Declatations go here
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-void targetIndex();
-
 void stochar(int x); // Temporary
 void createTestFiles(int n); // Temporary
 void removeTestFiles(int n); // Temporary
 
-void getJson();
+void loadTargets();
+void saveTarget();
 void configureMaximumPositions();
 void loadMax(char* path, long* Maxptr);
 void setMax(AccelStepper* Stepper);
@@ -105,7 +104,7 @@ public:
     struct target_data {
         short int id; // Computer created Target ID
         short int hp; // Horizontal position
-        String name;
+        String name; // User created Water Target 'Name'
         short int vp; // Vertical Position
         short int sp; // Spray position – a needle to break up the spray stream
         short int hf; // Horizontal fluctuation -small variations in the horizontal position over time

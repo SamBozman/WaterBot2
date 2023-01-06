@@ -1,11 +1,76 @@
 #include "globals.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void getJson()
+void loadTargets(){
+
+
+
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void saveTarget()
 {
+
     textIncoming = ESP_BT.readStringUntil('\n');
     debug("Text incoming is ");
     debugln(textIncoming);
+    short int id; // Computer created Target ID
+    const char* name; // User defined Name of the Target Position
+    int hp = Hstepper.currentPosition(); // Horizontal position
+    int vp = Vstepper.currentPosition(); // Vertical Position
+    int sp = Sstepper.currentPosition(); // Spray position – a needle to break up the spray stream
+    short int hf; // Horizontal fluctuation -small variations in the horizontal position over time
+    short int vf; // Vertical fluctuation -small variations in the vertical position over time
+    short int sf; // Spray fluctuation -small variations in the spray needle position over time
+    short int rwt; // Relative Watering Time (Certain plants will get more or less)
+    bool water; // Do we want the water on or off while traversing to next target?
+
+    int numFiles = 0;
+    numFiles = listFiles(LittleFS, "/TARGETS", 1, 0);
+    id = numFiles++; // add 1 to the count of existing waterTargets
+
+    debug("New ID for Target is ");
+    debugln(numFiles);
+
+    StaticJsonDocument<255> doc;
+    DeserializationError err = deserializeJson(doc, textIncoming);
+    if (err) {
+        Serial.print(F("deserializeJson() of *MaxPtr failed with code "));
+        Serial.println(err.f_str());
+    } else {
+
+        name = doc["Name"].as<const char*>();
+        hf = doc["H_Flux"];
+        vf = doc["V_Flux"];
+        sf = doc["S_Flux"];
+        rwt = doc["RWT"];
+        water = doc["Water"];
+    }
+    
+    makeWaterTarget(id, name, hp, vp, sp, hf, vf, sf, rwt, water);
+    stochar(numFiles); // add int x to 'TARGETS/T' to it to create a file name (T1, T2... etc)
+    writeFile(LittleFS, path, g_output);
+
+    // debug("ID = ");
+    // debug(id);
+    // debug(", Name= ");
+    // debug(name);
+    // debug(", H_Position = ");
+    // debug(hp);
+    // debug(", V_Position = ");
+    // debug(vp);
+    // debug(" , S_Position = ");
+    // debug(sp);
+    // debug(", H_Flux = ");
+    // debug(hf);
+    // debug(", V_Flux = ");
+    // debug(vf);
+    // debug(" , S_Flux = ");
+    // debug(sf);
+    // debug(", RWT = ");
+    // debug(rwt);
+    // debug(", Water = ");
+    // debugln(water);
 }
 
 // Check/Set/Read Maximum stepper positions+++++++++++++++++++++++++++++++++
@@ -68,7 +133,7 @@ void loadMax(char* path, long* MaxPtr)
     StaticJsonDocument<255> doc;
     DeserializationError err = deserializeJson(doc, g_output);
     if (err) {
-        Serial.print(F("deserializeJson() failed with code "));
+        Serial.print(F("deserializeJson() of *MaxPtr failed with code "));
         Serial.println(err.f_str());
     } else {
         // MaxPtr dereferenced to current stepper Maximum position global variable

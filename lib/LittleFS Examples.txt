@@ -1,0 +1,62 @@
+LittleFS examples {
+    numFiles = listFiles(LittleFS, "/", 1, numFiles);//get number of files in a directory
+    
+    debugln("SPIFFS-like write file to new path and delete it w/folders");
+    writeFile2(LittleFS, "/new1/new2/new3/hello3.txt", "Hello3");
+    listDir(LittleFS, "/", 3);
+    deleteFile2(LittleFS, "/new1/new2/new3/hello3.txt");
+    listDir(LittleFS, "/", 3);
+
+    createDir(LittleFS, "/mydir");
+    writeFile(LittleFS, "/mydir/hello2.txt", "Hello2");
+    listDir(LittleFS, "/", 1);
+    deleteFile(LittleFS, "/mydir/hello2.txt");
+    removeDir(LittleFS, "/mydir");
+    listDir(LittleFS, "/", 1);
+    
+    writeFile(LittleFS, "/hello.txt", "Hello ");
+    appendFile(LittleFS, "/hello.txt", "World!\r\n");
+    readFile(LittleFS, "/hello.txt");
+    renameFile(LittleFS, "/hello.txt", "/foo.txt");
+    readFile(LittleFS, "/foo.txt");
+    deleteFile(LittleFS, "/foo.txt");
+    testFileIO(LittleFS, "/test.txt");
+    deleteFile(LittleFS, "/test.txt");
+    debugln("Test complete");
+}
+
+Testing Files examples{
+  debugln("Going to list Directories");
+  listDir(LittleFS, "/", 1);
+  debugln("Listed Directories");
+  debugln("");
+
+  debugln("Going to create files");
+  createTestFiles(2);
+  debugln("Files created");
+  debugln("");
+
+  debugln("Going to list Directories");
+  listDir(LittleFS, "/", 1);
+  debugln("Listed Directories");
+  debugln("");
+
+  debugln("Going to read A1");
+  readFile(LittleFS, "/A1");
+  debugln("Read A1");
+  debugln("");
+ 
+ debugln("Going to read A2");
+  readFile(LittleFS, "/A2");
+  debugln("Read A2");
+  debugln("");
+
+  debugln("Going to remove files");
+  removeTestFiles(2);
+  debugln("Files removed");
+
+  debugln("Going to list Directories");
+  listDir(LittleFS, "/", 1);
+  debugln("Listed Directories");
+}
+    
