@@ -1,6 +1,21 @@
 #include "globals.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void deleteAllTargets()
+{
+    int numFiles = getNumTargetFiles();
+    if (numFiles == 0) {
+        debugln("No saved TargetFiles exist!");
+    } else {
+        for (int i = 1; i < numFiles + 1; i++) { // Run through this code for each target file
+            stochar(i);
+            deleteFile(LittleFS, 
+            path);
+        }
+    }
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void loadTargets()
 {
     WATER_DATA_MANAGER data_manager; // Create a Data Manager variable
@@ -113,7 +128,8 @@ int getNumTargetFiles()
     debugln(numFiles);
     return numFiles;
 }
-// Check/Set/Read Maximum stepper positions+++++++++++++++++++++++++++++++++
+
+// Check if /MAX directories have been created ++++++++++++++++++++++++++++
 void configureMaximumPositions()
 {
     String s;

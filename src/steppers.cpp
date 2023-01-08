@@ -54,7 +54,7 @@ void homeStepper(AccelStepper& Stepper, int homePin)
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void processIncoming(int incoming)
 {
-    unsigned char textBlock[] = "Hello to everyone who loves me \n";
+    unsigned char textBlock[] = "All saved Water Targets have been deleted! \n";
     unsigned char textBlock2[] = "Goodbye to everyone who hates me \n";
 
     switch (incoming) {
@@ -110,10 +110,14 @@ void processIncoming(int incoming)
         debugln("Sending 208 back to app");
         debugln("Adding a new Target");
         break;
+    case 209: // Send new Target ID number to WaterBot App
+        debugln("Deleting all Targets");
+        ESP_BT.write(textBlock, sizeof(textBlock)); // Write message back to App
+        deleteAllTargets();
+        break;
 
     case 254: //! Testing blob text to WaterBot app
         ESP_BT.write(resetSlider); // reset slider poition to 100 (center) & clear buttons
-        ESP_BT.write(textBlock, sizeof(textBlock));
         ESP_BT.write(textBlock2, sizeof(textBlock2));
         break;
     case 255: //! disableOutputs for testing

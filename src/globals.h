@@ -68,12 +68,13 @@ void removeTestFiles(int n); // Temporary
 
 int getNumTargetFiles(); // Returns the number of exisiting waterTarget files
 
-void loadTargets();
-void saveTarget();
-void configureMaximumPositions();
-void loadMax(char* path, long* Maxptr);
-void setMax(AccelStepper* Stepper);
-void resetMax(AccelStepper* Stepper);
+void deleteAllTargets(); // Delete all exisiting saved Targets
+void loadTargets(); // Load Target files into Data_Manager
+void saveTarget(); // Save a Target from WaterBot app
+void configureMaximumPositions(); // Create MAX directories
+void setMax(AccelStepper* Stepper); // set Maximum position for a stepper
+void loadMax(char* path, long* Maxptr); // Load Maximum positions for steppers
+void resetMax(AccelStepper* Stepper); // reset Maximum postion for a stepper to factory
 
 void homeStepper(AccelStepper& Stepper, int homePin);
 void processIncoming(int incoming);

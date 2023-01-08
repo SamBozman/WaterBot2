@@ -13,12 +13,13 @@ void setup()
     // homeStepper(Sstepper, sHomePin);
 
     configureMaximumPositions(); // Set up/load Maximum stepper postions
-    loadTargets();
-    //  testDataManager();
-    // int numFiles = 0;
-    // numFiles = listFiles(LittleFS, "/TARGETS", 1, 0);
-    // debug("NumFiles before creating targets is ");
-    // debugln(numFiles);
+    deleteAllTargets();
+    // loadTargets();
+    //   testDataManager();
+    //  int numFiles = 0;
+    //  numFiles = listFiles(LittleFS, "/TARGETS", 1, 0);
+    //  debug("NumFiles before creating targets is ");
+    //  debugln(numFiles);
 
     // stochar(1);
     // deleteFile(LittleFS, path);
