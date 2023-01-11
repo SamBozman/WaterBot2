@@ -1,6 +1,5 @@
 #include "globals.h"
 
-
 // Insert target_data into the set
 void WATER_DATA_MANAGER::insert_data(WATER_DATA::target_data& data)
 {
@@ -50,7 +49,7 @@ void WATER_DATA_MANAGER::print_all_data()
 
         debug(", RWT: ");
         debug(data.rwt);
-        
+
         debug(", WATER: ");
         debug(data.water);
         debugln("");

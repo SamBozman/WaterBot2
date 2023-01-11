@@ -67,9 +67,9 @@ void createTestFiles(int n); // Temporary
 void removeTestFiles(int n); // Temporary
 
 int getNumTargetFiles(); // Returns the number of exisiting waterTarget files
-
+void loadDataManager();
 void deleteAllTargets(); // Delete all exisiting saved Targets
-void loadTargets(); // Load Target files into Data_Manager
+void loadTarget(); // Load Target files into Data_Manager
 void saveTarget(); // Save a Target from WaterBot app
 void configureMaximumPositions(); // Create MAX directories
 void setMax(AccelStepper* Stepper); // set Maximum position for a stepper
@@ -139,6 +139,7 @@ public:
     void insert_data(WATER_DATA::target_data& data); // Adds a new data entry
     void delete_data(int id); // Removes the entry by ID if it exists
     void print_all_data(void); // prints the entire data structure
+    void send_data_to_app(void); // Send short Target list to app
 
 private:
 };

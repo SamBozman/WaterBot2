@@ -9,41 +9,49 @@ void deleteAllTargets()
     } else {
         for (int i = 1; i < numFiles + 1; i++) { // Run through this code for each target file
             stochar(i);
-            deleteFile(LittleFS, 
-            path);
+            deleteFile(LittleFS,
+                path);
         }
     }
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-void loadTargets()
+void loadTarget(int i)
+{
+
+    stochar(i);
+    File file = LittleFS.open(path); // Open file
+    if (!file || file.isDirectory()) { // Check if file structure is OK
+        debugln("- failed to open MAX directory for reading");
+        return;
+    }
+
+    debug("- reading from /TARGET direcory file: ");
+    debugln(path);
+
+    int x = 0;
+    while (file.available()) {
+        g_output[x] = file.read(); // Read each character
+        x++;
+    }
+    g_output[x] = 0; // add a delimiter
+
+    file.close(); // close this Target file
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void loadDataManager()
 {
     WATER_DATA_MANAGER data_manager; // Create a Data Manager variable
+
     int numFiles = getNumTargetFiles();
     if (numFiles == 0) {
         debugln("No saved TargetFiles exist!");
     } else {
         for (int i = 1; i < numFiles + 1; i++) { // Run through this code for each target file
-            stochar(i);
-            File file = LittleFS.open(path);
-            if (!file || file.isDirectory()) {
-                debugln("- failed to open MAX directory for reading");
-                return;
-            }
+            loadTarget(i); // Function to load a saved Target into g_output char array
 
-            debug("- reading from /TARGET direcory file: ");
-            debugln(path);
-
-            int x = 0;
-            while (file.available()) {
-                g_output[x] = file.read();
-                x++;
-            }
-            g_output[x] = 0; // delimiter
-
-            file.close();
-
-            StaticJsonDocument<255> doc;
+            StaticJsonDocument<255> doc; // Deserialize the Target file
             DeserializationError err = deserializeJson(doc, g_output);
             if (err) {
                 Serial.print(F("deserializeJson() of *MaxPtr failed with code "));
