@@ -1,5 +1,6 @@
 #include "globals.h"
 
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void deleteAllTargets()
 {
@@ -26,7 +27,7 @@ void loadTarget(int i)
         return;
     }
 
-    debug("- reading from /TARGET direcory file: ");
+    debug("- reading from /TARGET directory file: ");
     debugln(path);
 
     int x = 0;
@@ -35,7 +36,6 @@ void loadTarget(int i)
         x++;
     }
     g_output[x] = 0; // add a delimiter
-
     file.close(); // close this Target file
 }
 

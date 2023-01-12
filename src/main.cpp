@@ -4,7 +4,7 @@
 void loop()
 
 {
-    Elements targetIndexArray;
+    // Elements targetIndexArray;
 
     if (ESP_BT.available()) {
         int incoming = ESP_BT.read(); // Read byte from cell-phone

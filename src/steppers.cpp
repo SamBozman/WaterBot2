@@ -1,6 +1,11 @@
 #include "globals.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void runWaterTargets()
+{
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void homeStepper(AccelStepper& Stepper, int homePin)
 {
     int move_finished = 1; // Used to check if move is completed
@@ -51,12 +56,13 @@ void homeStepper(AccelStepper& Stepper, int homePin)
     Stepper.setMaxSpeed(200.0); // Set Max Speed of Stepper (Faster for regular movements)
     Stepper.setAcceleration(100.0); // Set Acceleration of Stepper
 }
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void processIncoming(int incoming)
 {
-    unsigned char textBlock[] = "All saved Water Targets have been deleted! \n";
-    unsigned char textBlock2[] = "Goodbye to everyone who hates me \n";
+    char buf[] = "this is a conversion test \n";
 
+    unsigned char textBlock2[] = "Goodbye to everyone who hates me \n";
     switch (incoming) {
 
     case 201:
@@ -111,14 +117,23 @@ void processIncoming(int incoming)
         debugln("Adding a new Target");
         break;
     case 209: // Send new Target ID number to WaterBot App
-        debugln("Deleting all Targets");
-        ESP_BT.write(textBlock, sizeof(textBlock)); // Write message back to App
-        deleteAllTargets();
-        break;
+              // debugln("Deleting all Targets");
+              // ESP_BT.write(textBlock2, sizeof(textBlock2)); // Write message back to App
+              // deleteAllTargets();
+              // break;
 
     case 254: //! Testing blob text to WaterBot app
-        ESP_BT.write(resetSlider); // reset slider poition to 100 (center) & clear buttons
+        // ESP_BT.write(resetSlider); // reset slider poition to 100 (center) & clear buttons
+        debugln("Trying to send unsigned block to text to app! ");
         ESP_BT.write(textBlock2, sizeof(textBlock2));
+        ESP_BT.write((unsigned char*)buf, sizeof(buf));
+        // debug("Size of g_output is : ");
+        // debugln(sizeof(g_output));
+        // loadTarget(1);
+
+        // ESP_BT.write((unsigned char*)g_output, sizeof(g_output));
+        //  ESP_BT.write((const uint8_t*)g_output, sizeof(g_output));
+
         break;
     case 255: //! disableOutputs for testing
         ESP_BT.write(resetSlider); // reset slider poition to 100 (center) & clear buttons
@@ -159,18 +174,19 @@ void processStepper(AccelStepper* Stepper, int incoming)
 void doStepLoop(AccelStepper* Stepper, long* MaxPos)
 {
 
-    if (Stepper->currentPosition() < -10) {
+    if (Stepper->currentPosition() < -10) { // If Stepper is within 10 steps of HOME then ...
         Stepper->setMaxSpeed(100.0); // Set Max Speed of Stepper (Slower to get better accuracy)
         Stepper->setAcceleration(50.0); // Set Acceleration of Stepper
-        Stepper->moveTo(home);
-        Stepper->runToPosition();
-        ESP_BT.write(resetSlider);
-    } else if (Stepper->currentPosition() > (*MaxPos + 10)) {
+        Stepper->moveTo(home); // Set Target potion to Home position
+        Stepper->runToPosition(); // Run to HOME position (BLOCKING)
+        ESP_BT.write(resetSlider); // Reset slider to center position
+
+    } else if (Stepper->currentPosition() > (*MaxPos + 10)) { // If stepper is within 10 steps of MAX position then ...
         Stepper->setMaxSpeed(100.0); // Set Max Speed of Stepper (Slower to get better accuracy)
         Stepper->setAcceleration(50.0); // Set Acceleration of Stepper
-        Stepper->moveTo(*MaxPos);
-        Stepper->runToPosition();
-        ESP_BT.write(resetSlider);
+        Stepper->moveTo(*MaxPos); // Set Target potion to MAX position
+        Stepper->runToPosition(); // Run to MAX position (BLOCKING)
+        ESP_BT.write(resetSlider); // Reset slider to center position
     } else
         Stepper->runSpeed();
 }

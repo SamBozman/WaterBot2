@@ -6,7 +6,7 @@
 
 #include <AccelStepper.h>
 #include <ArduinoJson.h>
-#include <Array.h>
+//#include <Array.h>
 #include <LittleFS.h>
 #include <Streaming.h>
 #include <algorithm>
@@ -53,11 +53,11 @@ extern long S_MaxPos; // Spray Stepper Maximum travel position from home
 extern long* MaxPtr; // init MaxPtr
 
 extern String textIncoming;
-extern char g_output[255]; // Serialized water target object
+extern char g_output[254]; // Serialized water target object
 extern char path[25]; // path to saved files
 
-#define arraySize 5 //! Set array size to 100 for production?
-typedef Array<int, arraySize> Elements; // defintion of array
+// #define arraySize 5 //! Set array size to 100 for production?
+// typedef Array<int, arraySize> Elements; // defintion of array
 
 // All Function Declatations go here
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -66,10 +66,11 @@ void stochar(int x); // Temporary
 void createTestFiles(int n); // Temporary
 void removeTestFiles(int n); // Temporary
 
+void runWaterTargets();
 int getNumTargetFiles(); // Returns the number of exisiting waterTarget files
 void loadDataManager();
 void deleteAllTargets(); // Delete all exisiting saved Targets
-void loadTarget(); // Load Target files into Data_Manager
+void loadTarget(int i); // Load Target files into Data_Manager
 void saveTarget(); // Save a Target from WaterBot app
 void configureMaximumPositions(); // Create MAX directories
 void setMax(AccelStepper* Stepper); // set Maximum position for a stepper

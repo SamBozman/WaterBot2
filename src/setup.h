@@ -8,9 +8,9 @@ void setup()
     ESP_BT.begin("ESP32_Control"); // Name of your Bluetooth interface
     delay(5000); //! Temporary for testing
 
-    homeStepper(Hstepper, hHomePin);
-    homeStepper(Vstepper, vHomePin);
-    homeStepper(Sstepper, sHomePin);
+    // homeStepper(Hstepper, hHomePin);
+    // homeStepper(Vstepper, vHomePin);
+    // homeStepper(Sstepper, sHomePin);
 
     configureMaximumPositions(); // Set up/load Maximum stepper postions
     // deleteAllTargets();
