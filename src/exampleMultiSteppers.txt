@@ -1,0 +1,44 @@
+// First I declare the AccelStepper objects
+
+const int stepperAmount = 2;
+
+AccelStepper stepper1(AccelStepper::FULL4WIRE, 5, 6, 7, 8);
+AccelStepper stepper2(AccelStepper::FULL4WIRE, 9, 10, 11, 12);
+
+// Then I stick pointers to those AccelStepper objects into an Array
+
+AccelStepper* steppers[stepperAmount] = {
+
+    &stepper1,
+    &stepper2,
+};
+
+void setup()
+{
+
+    // now i can just make a for loop and iterate through the steppers array and call whatever function I want
+    // Note: you have to use -> to call that function instead of a .
+
+    for (int stepperNumber = 0; stepperNumber < stepperAmount; stepperNumber++) {
+
+        steppers[stepperNumber]->stetMaxSpeed(SPEED);
+        steppers[stepperNumber]->setAcceleration(ACCELARATION);
+    }
+}
+
+void loop()
+{
+
+    // Same goes for setting postions and running the steppers
+
+    for (int stepperNumber = 0; stepperNumber < stepperAmount; stepperNumber++) {
+
+        steppers[stepperNumber]->moveTo(positionArray[stepperNumber]);
+    }
+
+    for (int stepperNumber = 0; stepperNumber < stepperAmount; stepperNumber++) {
+
+        steppers[stepperNumber]->run();
+    }
+}
+}

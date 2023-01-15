@@ -1,6 +1,5 @@
 #include "globals.h"
 
-
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void deleteAllTargets()
 {
@@ -66,7 +65,7 @@ void loadDataManager()
                 short int vf = doc["vf"]; // Vertical fluctuation -small variations in the vertical position over time
                 short int sf = doc["sf"]; // Spray fluctuation -small variations in the spray needle position over time
                 short int rwt = doc["rwt"]; // Relative Watering Time (Certain plants will get more or less)
-                bool water = doc[water]; // Do we want the water on or off while traversing to next target?
+                bool water = doc["water"]; // Do we want the water on or off while traversing to next target?
 
                 String s = "T" + String(i); // Combine 2 strings
                 int n = s.length(); // Get length of combined string
